@@ -32,12 +32,8 @@ public class TrainSensorTest {
 
     @Test
     public void SetLowSpeedLimit(){
-        sensor.overrideSpeedLimit(200);
-        user.overrideJoystickPosition(150);
-        verify(user).overrideJoystickPosition(150);
 
         when(controller.getReferenceSpeed()).thenReturn(150);
-        controller.getReferenceSpeed();
 
         sensor.overrideSpeedLimit(50);
 
@@ -45,16 +41,14 @@ public class TrainSensorTest {
     }
 
     @Test
-    public void SetSpeedLimit(){
+    public void SetNormalSpeedLimit(){
         sensor.overrideSpeedLimit(100);
-        when(user.getAlarmState()).thenReturn(false) ;
-        boolean state = user.getAlarmState();
 
-        Assert.assertEquals(false, state);
+        verify(user, times(0)).setAlarmState(true);
     }
 
     @Test
-    public void SetNormalSpeedLimit(){
+    public void DoubleAlarm_SetSpeedLimit(){
         sensor.overrideSpeedLimit(-50);
         sensor.overrideSpeedLimit(1000);
         verify(user, times(2)).setAlarmState(true);
