@@ -50,5 +50,25 @@ public class TrainSystemTest {
 		Assert.assertEquals(0, controller.getReferenceSpeed());
 	}
 
-	
+	@Test
+	public void SetSpeedLimitToNegative(){
+		sensor.overrideSpeedLimit(-50);
+
+		Assert.assertEquals(true, user.getAlarmState());
+	}
+
+	@Test
+	public void SetLowSpeedLimit(){
+		sensor.overrideSpeedLimit(200);
+		user.overrideJoystickPosition(150);
+		controller.followSpeed();
+		sensor.overrideSpeedLimit(50);
+		Assert.assertEquals(true,user.getAlarmState());
+	}
+
+	@Test
+	public void SetSpeedLimit(){
+		sensor.overrideSpeedLimit(100);
+		Assert.assertEquals(false, user.getAlarmState());
+	}
 }
